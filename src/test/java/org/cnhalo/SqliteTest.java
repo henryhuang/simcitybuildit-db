@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
 import junit.framework.TestCase;
@@ -19,24 +20,16 @@ import org.apache.commons.io.FileUtils;
  */
 public class SqliteTest extends TestCase {
 
-	public void testMaterialCommercial() {
+	public void testCommercialMaterial() {
 
 		try {
 			try (Connection conn = DriverManager.getConnection("jdbc:sqlite::memory:")) {
 				assertEquals(true, conn.isValid(1000));
 
-				File file = new File(getSqlFilePath("init.sql"));
+				File file = new File(getSqlFilePath("commercial_building.sql"));
 				assertEquals(true, file.exists());
 
 				String sqlContent = FileUtils.readFileToString(file);
-				try (Statement statement = conn.createStatement()) {
-					statement.execute(sqlContent);
-				}
-				
-				file = new File(getSqlFilePath("commercial.sql"));
-				assertEquals(true, file.exists());
-
-				sqlContent = FileUtils.readFileToString(file);
 				try (Statement statement = conn.createStatement()) {
 					statement.executeUpdate(sqlContent);
 
@@ -48,18 +41,17 @@ public class SqliteTest extends TestCase {
 					}
 				}
 				
-				file = new File(getSqlFilePath("material_commercial.sql"));
+				file = new File(getSqlFilePath("commercial_material.sql"));
 				assertEquals(true, file.exists());
 
 				sqlContent = FileUtils.readFileToString(file);
 				try (Statement statement = conn.createStatement()) {
 					statement.executeUpdate(sqlContent);
 
-					try (ResultSet rs = statement.executeQuery("select count(*) from TB_MATERIAL_COMMERCIAL")) {
+					try (ResultSet rs = statement.executeQuery("select count(*) from TB_COMMERCIAL_MATERIAL")) {
 						if (rs.next()) {
-							assertEquals(9, rs.getInt(1));
+							assertEquals(43, rs.getInt(1));
 						}
-
 					}
 				}
 
@@ -70,13 +62,13 @@ public class SqliteTest extends TestCase {
 
 	}
 	
-	public void testCommercial() {
+	public void testCommercialBuilding() {
 
 		try {
 			try (Connection conn = DriverManager.getConnection("jdbc:sqlite::memory:")) {
 				assertEquals(true, conn.isValid(1000));
 
-				File file = new File(getSqlFilePath("commercial.sql"));
+				File file = new File(getSqlFilePath("commercial_building.sql"));
 				assertEquals(true, file.exists());
 
 				String sqlContent = FileUtils.readFileToString(file);
@@ -110,12 +102,23 @@ public class SqliteTest extends TestCase {
 				String sqlContent = FileUtils.readFileToString(file);
 				try (Statement statement = conn.createStatement()) {
 					statement.executeUpdate(sqlContent);
-
-					try (ResultSet rs = statement.executeQuery("select count(*) from TB_MATERIAL_FACTORY")) {
+					
+					try (ResultSet rs = statement.executeQuery("select count(*) from TB_FACTORY_MATERIAL")) {
 						if (rs.next()) {
 							assertEquals(11, rs.getInt(1));
 						}
-
+					}
+					try (ResultSet rs = statement.executeQuery("select * from TB_FACTORY_MATERIAL")) {
+						String[] colums = new String[]{
+								"ID", "ITEM", "LVL", "MAX_VALUE", "TIME_MIN", "IMG"
+						};
+						if (rs.next()) {
+							// 测试一下列
+							ResultSetMetaData metaData = rs.getMetaData();
+							for (int i = 1; i < metaData.getColumnCount(); i++) {
+								assertEquals(colums[i - 1], metaData.getColumnName(i));
+							}
+						}
 					}
 				}
 

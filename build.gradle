@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'groovy'
+
 
 sourceCompatibility = 1.8
 version = '1.0'
@@ -16,12 +18,27 @@ repositories {
 }
 
 dependencies {
-	runtime 'commons-io:commons-io:2.4'
-	runtime 'org.xerial:sqlite-jdbc:3.8.11.2'
-	runtime group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+	compile 'org.apache.commons:commons-lang3:3.4'
+	compile 'commons-io:commons-io:2.4'
+	compile 'org.xerial:sqlite-jdbc:3.8.11.2'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+	runtime group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+	runtime 'org.jsoup:jsoup:1.8.3'
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
+
+eclipse {
+	classpath {
+		file {
+			withXml {
+				Node node = it.asNode()
+				node.appendNode('classpathentry',[exported:"true",kind:"con",path:"GROOVY_SUPPORT"])
+				node.appendNode('classpathentry',[exported:"true",kind:"con",path:"GROOVY_DSL_SUPPORT"])
+			}
+		}
+	}
+}
+eclipse.project.natures.add 'org.eclipse.jdt.groovy.core.groovyNature'
 
 test {
     systemProperties 'property': 'value'
