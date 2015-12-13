@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.cnhalo.SqliteTest;
 
 /**
  *
@@ -34,4 +35,14 @@ public class PathUtil {
 		return StringUtils.join(ArrayUtils.addAll(new String[] { getWorkPath() }, dirs), File.separator);
 	}
 
+	/**
+	 * get the sqlite file path
+	 *
+	 * @param fileName
+	 * @return
+	 */
+	public static String getSqlFilePath(String fileName) {
+		return SqliteTest.class.getResource("/").getPath() + "sql" + File.separator + fileName;
+	}
+	
 }

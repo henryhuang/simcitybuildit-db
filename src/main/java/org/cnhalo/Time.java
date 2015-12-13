@@ -37,4 +37,17 @@ public class Time {
 		return String.format("Hour: %s, Minute: %s, Second: %s", hour, minute, second);
 	}
 	
+	public static Time buildFromMin(int timeInMin) {
+		int hour = 0;
+		int minute = 0;
+		int second = 0;
+		if(timeInMin < 60) {
+			minute = timeInMin;
+		} else {
+			hour = timeInMin / 60;
+			minute = timeInMin % 60;
+		}
+		return new Time(hour, minute, second);
+	}
+	
 }
