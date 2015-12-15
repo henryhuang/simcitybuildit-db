@@ -1,6 +1,6 @@
 ### 首页
 
-[http://henryhuang.github.io/simcitybuildit-db](http://henryhuang.github.io/simcitybuildit-db/#1)
+[http://henryhuang.github.io/simcitybuildit-db](http://henryhuang.github.io/simcitybuildit-db)
 
 ### 概述
 
