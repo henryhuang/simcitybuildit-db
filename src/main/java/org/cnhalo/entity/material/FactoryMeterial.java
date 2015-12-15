@@ -1,6 +1,8 @@
-package org.cnhalo.mem;
+package org.cnhalo.entity.material;
 
-import org.cnhalo.Time;
+import org.cnhalo.entity.Material;
+import org.cnhalo.entity.Time;
+
 
 /**
  *
@@ -9,7 +11,7 @@ import org.cnhalo.Time;
  * @date 2015年12月13日 下午10:11:13
  * 
  */
-public class FactoryMeterial {
+public class FactoryMeterial implements Material {
 
 	private String id;
 	private String item;

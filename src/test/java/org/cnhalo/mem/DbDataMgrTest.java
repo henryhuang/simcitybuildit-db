@@ -1,8 +1,8 @@
-package org.cnhalo.data;
+package org.cnhalo.mem;
 
 import static org.junit.Assert.assertEquals;
 
-import org.cnhalo.mem.DataMgr;
+import org.cnhalo.mem.DbDataMgr;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,18 +13,18 @@ import org.junit.Test;
  * @date	2015年12月13日 下午11:30:59
  * 
  */
-public class DataMgrTest {
+public class DbDataMgrTest {
 
-	private DataMgr dataMgr;
+	private DbDataMgr dataMgr;
 	
 	@Before
 	public void init() {
-		dataMgr = DataMgr.getInstance();
+		dataMgr = DbDataMgr.getInstance();
 	}
 	
 	@Test
 	public void testGetInstance() {
-		assertEquals(DataMgr.class, dataMgr.getClass()); 
+		assertEquals(DbDataMgr.class, dataMgr.getClass()); 
 	}
 
 	@Test

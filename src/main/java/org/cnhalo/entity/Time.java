@@ -1,4 +1,4 @@
-package org.cnhalo;
+package org.cnhalo.entity;
 
 /**
  * 时间对象

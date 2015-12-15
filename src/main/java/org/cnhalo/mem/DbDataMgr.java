@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.io.FileUtils;
+import org.cnhalo.entity.CommercialBuilding;
+import org.cnhalo.entity.material.FactoryMeterial;
 import org.cnhalo.util.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,35 +23,53 @@ import org.slf4j.LoggerFactory;
  * @date 2015年12月13日 下午10:04:10
  * 
  */
-public class DataMgr {
+public class DbDataMgr {
 
-	private static Logger logger = LoggerFactory.getLogger(DataMgr.class.getName());
+	private static Logger logger = LoggerFactory.getLogger(DbDataMgr.class.getName());
 
+	private Map<Integer, CommercialBuilding> id2CommercialBuilding = new ConcurrentHashMap<>();
+	
 	private Map<String, FactoryMeterial> id2FactoryMaterial = new ConcurrentHashMap<>();
 	private Map<String, String> fmItem2Id = new ConcurrentHashMap<>();
 	
 	private static class SingletonContainer {
-		private static DataMgr instance = new DataMgr();
+		private static DbDataMgr instance = new DbDataMgr();
 	}
 
-	public static DataMgr getInstance() {
+	public static DbDataMgr getInstance() {
 		return SingletonContainer.instance;
 	}
 
-	private DataMgr() {
+	private DbDataMgr() {
 		load();
 	}
 
 	private void load() {
 
 		try {
+			id2CommercialBuilding.clear();
 			id2FactoryMaterial.clear();
 
 			try (Connection conn = DriverManager.getConnection("jdbc:sqlite::memory:")) {
-
-				File file = new File(PathUtil.getSqlFilePath("material_factory.sql"));
-
+				
+				File file = new File(PathUtil.getSqlFilePath("commercial_building.sql"));
 				String sqlContent = FileUtils.readFileToString(file);
+				try (Statement statement = conn.createStatement()) {
+					statement.executeUpdate(sqlContent);
+
+					try (ResultSet rs = statement
+							.executeQuery("select ID, NAME, CAPTION from TB_COMMERCIAL_BUILDING")) {
+						while (rs.next()) {
+							int id = rs.getInt(1);
+							CommercialBuilding cb = new CommercialBuilding(id, rs.getString(1), rs.getString(2));
+							id2CommercialBuilding.put(id, cb);
+						}
+					}
+				}
+				
+				file = new File(PathUtil.getSqlFilePath("material_factory.sql"));
+
+				sqlContent = FileUtils.readFileToString(file);
 				try (Statement statement = conn.createStatement()) {
 					statement.executeUpdate(sqlContent);
 
@@ -64,6 +84,9 @@ public class DataMgr {
 						}
 					}
 				}
+				
+				// TODO CommercialMaterial
+				
 			}
 
 		} catch (Exception e) {
