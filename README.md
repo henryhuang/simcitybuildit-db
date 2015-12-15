@@ -1,3 +1,7 @@
+### 首页
+
+[http://henryhuang.github.io/simcitybuildit-db](http://henryhuang.github.io/simcitybuildit-db/#1)
+
 ### 概述
 
 玩了几个月的**SimCity Buildit**，这个游戏也算比较耐玩吧，每天登录两次造造东西，挺有意思。
