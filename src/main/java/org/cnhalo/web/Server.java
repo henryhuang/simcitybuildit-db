@@ -1,8 +1,12 @@
 package org.cnhalo.web;
 
+import static spark.Spark.*;
+import static org.cnhalo.util.JsonUtil.*;
+
 import org.cnhalo.web.controller.CommercialBuildingCtrlr;
 import org.cnhalo.web.controller.CommercialMaterialCtrlr;
 import org.cnhalo.web.controller.FactoryMaterialCtrlr;
+import org.cnhalo.web.error.ResponseError;
 
 /**
  *
@@ -19,6 +23,14 @@ public class Server {
 		new CommercialMaterialCtrlr();
 		new FactoryMaterialCtrlr();
 		
+		exception(IllegalArgumentException.class, (e, req, res) -> {
+			res.status(400);
+			res.body(toJson(new ResponseError(e)));
+		});
+		
+		after((req, res) -> {
+			res.type("application/json");
+		});
 	}
 	
 }
