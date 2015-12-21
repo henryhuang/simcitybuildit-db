@@ -10,6 +10,10 @@
 
 所以自己写了这么一个简单的**SimCity Buildit**数据库，外加一些查询接口。
 
+### 运行
+
+直接运行 org.cnhalo.web.Server
+
 ### 文件说明
 
 - doc/

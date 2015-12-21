@@ -11,7 +11,7 @@ import org.cnhalo.entity.Time;
  * @date 2015年12月13日 下午10:11:13
  * 
  */
-public class FactoryMeterial implements Material {
+public class FactoryMaterial implements Material {
 
 	private String id;
 	private String item;
@@ -20,7 +20,7 @@ public class FactoryMeterial implements Material {
 	private Time time;
 	private String img;
 
-	public FactoryMeterial(String id, String item, int level, int maxLevel, int timeInMin,
+	public FactoryMaterial(String id, String item, int level, int maxLevel, int timeInMin,
 			String img) {
 		this.id = id;
 		this.item = item;

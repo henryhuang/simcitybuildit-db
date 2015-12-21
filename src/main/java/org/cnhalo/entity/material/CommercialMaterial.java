@@ -32,7 +32,22 @@ public class CommercialMaterial implements Material {
 	private String img;
 	private CommercialBuilding store;
 	
-	public CommercialMaterial(String id, String item, int lvl, int maxLevel, Time time,
+	/**
+	 *
+	 * @param id
+	 * @param item
+	 * @param lvl
+	 * @param maxLevel
+	 * @param timeInMin
+	 * @param mats
+	 * @param maxCost
+	 * @param profit
+	 * @param perMin
+	 * @param usedIn
+	 * @param img
+	 * @param store
+	 */
+	public CommercialMaterial(String id, String item, int lvl, int maxLevel, int timeInMin,
 			List<MaterialCount> mats, int maxCost, int profit, int perMin, Set<Material> usedIn,
 			String img, CommercialBuilding store) {
 		super();
@@ -40,7 +55,7 @@ public class CommercialMaterial implements Material {
 		this.item = item;
 		this.lvl = lvl;
 		this.maxLevel = maxLevel;
-		this.time = time;
+		this.time = Time.buildFromMin(timeInMin);
 		this.mats = mats;
 		this.maxCost = maxCost;
 		this.profit = profit;

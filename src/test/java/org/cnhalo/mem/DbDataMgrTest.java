@@ -28,19 +28,33 @@ public class DbDataMgrTest {
 	}
 
 	@Test
-	public void testGetFactoryMeterialById() {
-		assertEquals("Metal", dataMgr.getFactoryMeterialById("Rs-i").getItem());
+	public void testGetFactoryMaterialById() {
+		assertEquals("Metal", dataMgr.getFactoryMaterialById("Rs-i").getItem());
 	}
 
 	@Test
-	public void testGetFactoryMeterialIdByItem() {
-		assertEquals("Rs-i", dataMgr.getFactoryMeterialIdByItem("Metal"));
+	public void testGetFactoryMaterialIdByItem() {
+		assertEquals("Rs-i", dataMgr.getFactoryMaterialIdByItem("Metal"));
 	}
 
 	@Test
-	public void testGetFactoryMeterialIdSet() {
-		assertEquals(11, dataMgr.getFactoryMeterialIdSet().size());
+	public void testGetFactoryMaterialIdSet() {
+		assertEquals(11, dataMgr.getFactoryMaterialIdSet().size());
 	}
 
+	@Test
+	public void testGetCommercialMaterialById() {
+		assertEquals("Nails", dataMgr.getCommercialMaterialById("Bs-n").getItem());
+	}
+
+	@Test
+	public void testGetCommercialMaterialIdByItem() {
+		assertEquals("Bs-n", dataMgr.getCommercialMaterialIdByItem("Nails"));
+	}
+
+	@Test
+	public void testGetCommercialMaterialIdSet() {
+		assertEquals(43, dataMgr.getCommercialMaterialIdSet().size());
+	}
 	
 }
